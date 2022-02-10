@@ -2,6 +2,7 @@ package com.eyo.reactivesim.services;
 
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
+import reactor.tools.agent.ReactorDebugAgent;
 
 class FluxAndMonoServicesTest {
 
@@ -218,6 +219,9 @@ class FluxAndMonoServicesTest {
 
     @Test
     void fruitsFluxOnErrorMap() {
+        //Hooks.onOperatorDebug();
+        ReactorDebugAgent.init();
+        ReactorDebugAgent.processExistingClasses();
         var fruitsFlux = fluxAndMonoServices.fruitsFluxOnErrorMap().log();
         StepVerifier.create(fruitsFlux)
                 .expectNext("PINEAPPLE")

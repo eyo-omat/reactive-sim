@@ -200,6 +200,7 @@ public class FluxAndMonoServices {
                         throw new RuntimeException("Exception Occurred");
                     return s.toUpperCase();
                 })
+                .checkpoint("checkpoint on Error map")
                 .onErrorMap(throwable-> {
                     System.out.println("e = " + throwable);
                     return new IllegalStateException("From onError Map");
