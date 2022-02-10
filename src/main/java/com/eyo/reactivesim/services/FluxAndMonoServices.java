@@ -164,12 +164,8 @@ public class FluxAndMonoServices {
     public Flux<String> fruitsFluxFilterDoOn(int number) {
         return Flux.fromIterable(List.of("Pineapple", "Melons", "Oranges"))
                 .filter(s -> s.length() > number)
-                .doOnNext(s -> {
-                    System.out.println("s = " + s);
-                })
-                .doOnSubscribe(subscription -> {
-                    System.out.println("subscription.toString() = " + subscription);
-                })
+                .doOnNext(s -> System.out.println("s = " + s))
+                .doOnSubscribe(subscription -> System.out.println("subscription.toString() = " + subscription))
                 .doOnComplete(() -> System.out.println("Completed!!!"))
                 .log();
     }
@@ -218,9 +214,7 @@ public class FluxAndMonoServices {
                         throw new RuntimeException("Exception Occurred");
                     return s.toUpperCase();
                 })
-                .doOnError(throwable-> {
-                    System.out.println("e = " + throwable);
-                })
+                .doOnError(throwable-> System.out.println("e = " + throwable))
                 .log();
     }
 
@@ -243,15 +237,11 @@ public class FluxAndMonoServices {
     public static void main(String[] args) {
         FluxAndMonoServices fluxAndMonoServices = new FluxAndMonoServices();
         fluxAndMonoServices.fruitsFlux().subscribe(
-                s -> {
-                    System.out.println("s = " + s);
-                }
+                s -> System.out.println("s = " + s)
         );
 
         fluxAndMonoServices.fruitsMono().subscribe(
-                s -> {
-                    System.out.println("Mono -> s = " + s);
-                }
+                s -> System.out.println("Mono -> s = " + s)
         );
     }
 }
