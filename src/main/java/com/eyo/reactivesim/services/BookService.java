@@ -2,6 +2,7 @@ package com.eyo.reactivesim.services;
 
 import com.eyo.reactivesim.domain.Book;
 import com.eyo.reactivesim.domain.Review;
+import com.eyo.reactivesim.exception.BookException;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -27,7 +28,12 @@ public class BookService {
                     Mono<List<Review>> reviews = reviewService.getReviewsByBookId(bookInfo.getBookId()).collectList();
                     return reviews
                             .map(review -> new Book(bookInfo, review));
-                }).log();
+                })
+                .onErrorMap(throwable -> {
+                    log.error("Exception is: " + throwable);
+                    return new BookException("Exception occurred while fetching book");
+                })
+                .log();
     }
 
     public Mono<Book> getBookById(long bookId) {

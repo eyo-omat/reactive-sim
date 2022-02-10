@@ -7,7 +7,6 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Service
 public class BookInfoService {
 
     public Flux<BookInfo> getBooks() {

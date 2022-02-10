@@ -6,7 +6,6 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
-@Service
 public class ReviewService {
 
     public Flux<Review> getReviewsByBookId(long bookId) {
